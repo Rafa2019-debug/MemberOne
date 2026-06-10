@@ -3,64 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👨‍💻 ByDataKu V29.5 - PORTAL TIM (+ CHAT ADMIN)</title>
+    <title>👨‍💻 ByDataKu V30.1 - PORTAL TIM PREMIUM</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
-        :root { --primary: #2563eb; --success: #16a34a; --danger: #dc2626; --warning: #d97706; --whatsapp: #25d366; --purple: #7c3aed; --dark: #000000; --light: #f1f5f9; --border: #000000; --trash: #475569; }
-        body { font-family: Arial, Helvetica, sans-serif; background-color: #f8fafc; margin: 0; padding: 20px; color: #000000; }
-        .container { max-width: 1300px; margin: 0 auto; background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border-top: 5px solid var(--primary);}
-        .header { text-align: center; margin-bottom: 25px; border-bottom: 2px dashed #94a3b8; padding-bottom: 15px; }
-        .header h1 { color: var(--primary); margin: 0; font-size: 28px; font-weight: bold; }
-        #cloudStatus { display: inline-block; margin-top: 10px; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; background: #fef2f2; color: #dc2626; border: 2px solid #fca5a5; transition: all 0.3s; }
-        #cloudStatus.online { background: #dcfce7; color: #16a34a; border-color: #86efac; }
-        label { display: block; font-weight: bold; color: #000000; margin-bottom: 8px; }
-        #loginGate { background: #f5f3ff; padding: 35px; border: 3px dashed var(--purple); border-radius: 12px; text-align: center; margin: 40px auto; max-width: 450px; box-shadow: 0 10px 15px rgba(124, 58, 237, 0.1); }
-        #loginGate h2 { color: var(--purple); margin-top: 0; font-size: 26px; margin-bottom: 10px;}
-        #myIdentity { width: 100%; padding: 15px; font-size: 18px; border: 2px solid var(--purple); border-radius: 8px; font-weight: bold; color: #0f172a; text-align: center; box-sizing: border-box; transition: 0.3s;}
-        #myIdentity:focus { outline: none; box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.2); }
-        .toolbar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0; background: var(--light); padding: 15px; border-radius: 8px; }
-        .btn { padding: 10px 18px; font-size: 14px; font-weight: 600; color: #fff; border: none; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.2s;}
-        .btn:active { transform: scale(0.96); }
-        .btn-cyan { background: #0284c7; } .btn-green { background: var(--success); } .btn-orange { background: var(--warning); } .btn-red { background: var(--danger); } .btn-purple { background: var(--purple); }
-        .btn-status-done { background: #334155; color: #ffffff; } .btn-status-undone { background: var(--warning); color: #ffffff; } 
-        #toastNotif { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #0f172a; color: #ffffff; padding: 12px 25px; border-radius: 30px; font-size: 14px; font-weight: bold; z-index: 9999; border: 2px solid var(--whatsapp); text-align: center; }
-        .search-area { background: #f1f5f9; border: 2px solid var(--primary); padding: 15px; border-radius: 8px; margin-top: 15px; margin-bottom: 20px; }
+        :root { --primary: #4f46e5; --success: #10b981; --danger: #ef4444; --warning: #f59e0b; --whatsapp: #10b981; --purple: #8b5cf6; --dark: #1e293b; --light: #f8fafc; --border: #cbd5e1; --trash: #64748b; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; margin: 0; padding: 20px; color: #334155; }
+        .container { max-width: 1300px; margin: 0 auto; background: #ffffff; padding: 30px; border-radius: 20px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05); border-top: 6px solid var(--primary);}
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 1px solid #e2e8f0; padding-bottom: 20px; }
+        .header h1 { color: var(--primary); margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.5px;}
+        #cloudStatus { display: inline-block; margin-top: 15px; padding: 8px 20px; border-radius: 30px; font-weight: 700; font-size: 13px; background: #fef2f2; color: #ef4444; transition: 0.3s; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.1); }
+        #cloudStatus.online { background: #ecfdf5; color: #10b981; box-shadow: 0 2px 4px rgba(16, 185, 129, 0.1); }
+        
+        label { display: block; font-weight: 700; color: #475569; margin-bottom: 8px; font-size: 14px;}
+        #loginGate { background: #f8fafc; padding: 40px; border: 2px dashed #cbd5e1; border-radius: 20px; text-align: center; margin: 40px auto; max-width: 450px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        #loginGate h2 { color: var(--primary); margin-top: 0; font-size: 28px; margin-bottom: 15px; font-weight: 800;}
+        #myIdentity { width: 100%; padding: 16px; font-size: 18px; border: 2px solid #e2e8f0; border-radius: 12px; font-weight: 700; color: #1e293b; text-align: center; box-sizing: border-box; transition: 0.3s; background: #ffffff;}
+        #myIdentity:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+
+        .toolbar { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 20px 0; background: #f8fafc; padding: 20px; border-radius: 16px; border: 1px solid #f1f5f9; }
+        .btn { padding: 10px 20px; font-size: 14px; font-weight: 700; color: #fff; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .btn:active { transform: scale(0.96); } .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 8px -1px rgba(0,0,0,0.15); }
+        .btn-cyan { background: #0ea5e9; } .btn-green { background: var(--success); } .btn-orange { background: var(--warning); } .btn-red { background: var(--danger); } .btn-purple { background: var(--primary); }
+        
+        .search-area { background: #ffffff; border: 1px solid #e2e8f0; padding: 20px; border-radius: 16px; margin-top: 15px; margin-bottom: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
         .filter-row { display: flex; flex-wrap: wrap; gap: 15px; width: 100%; } .filter-col { flex: 1; min-width: 200px; }
-        .search-input { width: 100%; padding: 11px; border: 2px solid var(--border); border-radius: 6px; font-weight: bold; box-sizing: border-box; }
-        .tab-container { display: flex; gap: 5px; margin-bottom: 20px; border-bottom: 3px solid #cbd5e1; }
-        .tab-btn { flex: 1; padding: 12px 5px; font-size: 15px; font-weight: bold; border: none; background: #e2e8f0; color: #475569; border-radius: 8px 8px 0 0; cursor: pointer; }
-        .tab-btn.active-tab-aktif { background: var(--primary); color: white; } .tab-btn.active-tab-selesai { background: var(--success); color: white; } .tab-btn.active-tab-sampah { background: var(--trash); color: white; }
+        .search-input { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-weight: 600; box-sizing: border-box; background: #f8fafc; transition: 0.3s;}
+        .search-input:focus { border-color: var(--primary); background: #ffffff; outline:none;}
+
+        .tab-container { display: flex; gap: 8px; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; padding-bottom: 0;}
+        .tab-btn { flex: 1; padding: 14px 5px; font-size: 14px; font-weight: 700; border: none; background: transparent; color: #64748b; border-radius: 12px 12px 0 0; cursor: pointer; transition: 0.2s; position: relative; bottom: -2px; }
+        .tab-btn:hover { color: var(--primary); background: #f8fafc;}
+        .tab-btn.active-tab-aktif { background: var(--primary); color: white; border-bottom: 2px solid var(--primary);} 
+        .tab-btn.active-tab-selesai { background: var(--success); color: white; border-bottom: 2px solid var(--success);} 
+        .tab-btn.active-tab-sampah { background: var(--trash); color: white; border-bottom: 2px solid var(--trash);}
         .tab-content { display: none; } .tab-content.active { display: block; }
+        
         .columns-wrapper { display: block; width: 100%; font-size: 0; margin-bottom: 30px; }
-        .data-column { display: inline-block; width: 31.33%; min-width: 300px; font-size: 14px; background: #ffffff; border: 2px solid #000000; border-radius: 8px; padding: 15px; margin: 1%; vertical-align: top; box-sizing: border-box; position: relative; }
-        .data-column.is-duplicate { border-color: var(--danger) !important; background-color: #fef2f2 !important; box-shadow: 0 0 10px rgba(220, 38, 38, 0.3); }
-        .data-column.is-done { background-color: #d1fae5 !important; border-color: #10b981 !important; } .data-column.is-deleted { background-color: #f1f5f9 !important; opacity: 0.85; }
-        .col-title { font-weight: bold; text-align: center; padding: 8px; color: #ffffff; border-radius: 6px; margin-bottom: 12px; } .title-global { background: #0f172a; } .title-tunggal { background: #334155; }
-        .card-actions { display: flex; gap: 5px; margin-bottom: 10px; } .card-actions .btn { flex: 1; padding: 10px 5px; font-size: 13px; }
-        .output-box { width: 100%; height: 350px; padding: 10px; border: 2px solid #000000; border-radius: 6px; font-weight: 800; box-sizing: border-box; resize: vertical; line-height: 1.4; background-color: #fffbdd; }
-        .output-box:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.2); }
-        .mass-check-row { margin-bottom: 10px; font-weight: bold; font-size: 13px; background: #f1f5f9; padding: 8px; border-radius: 4px; border: 1px solid #cbd5e1; }
-        .duplicate-msg { text-align: center; background: #fef2f2; color: var(--danger); padding: 6px; font-weight: 900; font-size: 12px; margin-bottom: 10px; border: 2px dashed #f87171; animation: blink 1.5s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        .assign-box { margin-bottom: 10px; background: #f0fdf4; padding: 8px; border-radius: 4px; border: 1px solid var(--success); font-weight: bold; font-size: 13px; color: var(--success); text-align: center;}
+        .data-column { display: inline-block; width: 31.33%; min-width: 300px; font-size: 14px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; margin: 1%; vertical-align: top; box-sizing: border-box; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s;}
+        .data-column:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -5px rgba(0,0,0,0.08); z-index: 10;}
+        .data-column.is-duplicate { border-color: #fca5a5 !important; background-color: #fef2f2 !important; }
+        .data-column.is-done { background-color: #f0fdf4 !important; border-color: #86efac !important; } .data-column.is-deleted { background-color: #f8fafc !important; opacity: 0.7; }
         
-        /* CSS CHAT BOX MELAYANG (TIM) */
-        #chatToggleBtn { position: fixed; bottom: 20px; right: 20px; background: var(--purple); color: white; border: none; border-radius: 50px; padding: 15px 25px; font-weight: bold; font-size: 15px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 10000; transition: 0.3s; display: none; }
+        .col-title { font-weight: 800; text-align: center; padding: 10px; color: #ffffff; border-radius: 30px; margin-bottom: 15px; font-size: 12px; letter-spacing: 0.5px;} 
+        .title-global { background: linear-gradient(135deg, #1e293b, #334155); } .title-tunggal { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        
+        .assign-box { margin-bottom: 15px; background: #ecfdf5; padding: 10px; border-radius: 8px; border: 1px solid #a7f3d0; font-weight: 700; font-size: 13px; color: #059669; text-align: center;}
+        .mass-check-row { margin-bottom: 15px; font-weight: 700; font-size: 13px; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid #e2e8f0; color:#334155; }
+        .card-actions { display: flex; gap: 8px; margin-bottom: 12px; } .card-actions .btn { flex: 1; padding: 10px 5px; font-size: 13px; box-shadow:none; border-radius:8px;}
+        .btn-status-done { background: #cbd5e1; color: #334155; } .btn-status-undone { background: var(--warning); color: #ffffff; } 
+        
+        .output-box { width: 100%; height: 320px; padding: 15px; border: 2px solid #e2e8f0; border-radius: 10px; font-weight: 600; font-size: 13px; box-sizing: border-box; resize: vertical; line-height: 1.5; color: #1e293b; background-color: #fffff8; transition: 0.2s;}
+        .output-box:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); background-color:#ffffff;}
+        
+        .edit-toolbar { display: flex; justify-content: space-between; gap: 8px; margin-top: 10px; }
+        .edit-toolbar button { flex: 1; padding: 8px; font-size: 12px; font-weight: 700; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+        .edit-toolbar button:hover { background: #e2e8f0; color: #0f172a; }
+
+        .duplicate-msg { text-align: center; background: #fef2f2; color: var(--danger); padding: 8px; font-weight: 800; font-size: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px dashed #fca5a5; }
+
+        #chatToggleBtn { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; border: none; border-radius: 50px; padding: 15px 25px; font-weight: bold; font-size: 15px; cursor: pointer; box-shadow: 0 10px 15px rgba(79, 70, 229, 0.3); z-index: 10000; transition: 0.3s; display: none; }
         #chatToggleBtn:hover { transform: scale(1.05); }
-        #chatBox { position: fixed; bottom: 80px; right: 20px; width: 320px; height: 450px; background: white; border: 3px solid var(--purple); border-radius: 12px; display: none; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 10000; overflow: hidden; }
-        #chatHeader { background: var(--purple); color: white; padding: 12px; font-weight: bold; text-align: center; }
-        #chatMessages { flex: 1; padding: 10px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 8px; }
-        .msg-item { max-width: 85%; padding: 8px 12px; border-radius: 8px; font-size: 13px; line-height: 1.4; word-wrap: break-word; }
-        .msg-mine { align-self: flex-end; background: #dcfce7; border: 1px solid #86efac; border-bottom-right-radius: 0; }
-        .msg-other { align-self: flex-start; background: #ffffff; border: 1px solid #cbd5e1; border-bottom-left-radius: 0; }
-        .msg-admin { align-self: flex-start; background: #fef2f2; border: 1px solid #fca5a5; font-weight: bold; color:#dc2626; border-bottom-left-radius: 0;}
-        .msg-sender { font-size: 10px; font-weight: bold; margin-bottom: 3px; color: #475569; }
-        #chatInputArea { display: flex; border-top: 1px solid #ccc; background: white;}
-        #chatInput { flex: 1; border: none; padding: 12px; outline: none; font-weight: bold;}
-        #chatInputArea button { background: var(--purple); color: white; border: none; padding: 0 15px; cursor: pointer; font-weight: bold; }
+        #chatBox { position: fixed; bottom: 80px; right: 20px; width: 340px; height: 480px; background: white; border: none; border-radius: 16px; display: none; flex-direction: column; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); z-index: 10000; overflow: hidden; }
+        #chatHeader { background: linear-gradient(135deg, var(--primary), var(--purple)); color: white; padding: 15px; font-weight: bold; text-align: center; }
+        #chatMessages { flex: 1; padding: 15px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
+        .msg-item { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.4; word-wrap: break-word; box-shadow: 0 1px 2px rgba(0,0,0,0.05);}
+        .msg-mine { align-self: flex-end; background: #4f46e5; color:white; border-bottom-right-radius: 2px; }
+        .msg-other { align-self: flex-start; background: #ffffff; border: 1px solid #e2e8f0; border-bottom-left-radius: 2px; color:#1e293b;}
+        .msg-admin { align-self: flex-start; background: #fef2f2; border: 1px solid #fca5a5; font-weight: bold; color:#ef4444; border-bottom-left-radius: 2px;}
+        .msg-sender { font-size: 11px; font-weight: 700; margin-bottom: 4px; opacity: 0.8; }
+        #chatInputArea { display: flex; border-top: 1px solid #e2e8f0; background: white; padding:10px;}
+        #chatInput { flex: 1; border: 1px solid #cbd5e1; border-radius:20px; padding: 10px 15px; outline: none; font-weight: 600; background:#f8fafc;}
+        #chatInputArea button { background: transparent; color: var(--primary); border: none; padding: 0 15px; cursor: pointer; font-weight: 800; font-size:15px;}
         
-        @media (max-width: 768px) { .data-column { width: 98%; margin: 3% 0; } .filter-col { min-width: 100%; } }
+        #toastNotif { display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #1e293b; color: #ffffff; padding: 14px 28px; border-radius: 30px; font-size: 14px; font-weight: 700; z-index: 9999; box-shadow: 0 10px 15px rgba(0,0,0,0.2); text-align: center; }
+        @media (max-width: 768px) { .data-column { width: 100%; margin: 3% 0; } .filter-col { min-width: 100%; } }
     </style>
 </head>
 <body>
@@ -71,38 +88,38 @@
     <div id="chatHeader">💬 Pusat Komunikasi</div>
     <div id="chatMessages"></div>
     <div id="chatInputArea">
-        <input type="text" id="chatInput" placeholder="Lapor 'tugas habis' dll..." onkeypress="if(event.key === 'Enter') kirimPesan()">
-        <button onclick="kirimPesan()">Kirim</button>
+        <input type="text" id="chatInput" placeholder="Ketik laporan..." onkeypress="if(event.key === 'Enter') kirimPesan()">
+        <button onclick="kirimPesan()">➤</button>
     </div>
 </div>
 
 <div class="container">
     <div class="header">
-        <h1>👨‍💻 PORTAL KERJA TIM</h1>
-        <p id="userGreeting">Aplikasi Pengelola Data Harian</p><br>
-        <div id="cloudStatus">⏳ Menyambungkan ke Database Induk...</div>
+        <h1>✨ PORTAL KERJA TIM</h1>
+        <p id="userGreeting">Workspace Premium Harian</p>
+        <div id="cloudStatus">⏳ Memuat Data Cloud...</div>
     </div>
     
     <div id="loginGate">
-        <h2>🔒 Akses Terkunci</h2>
-        <p style="font-weight:bold; color:#475569; margin-bottom:20px;">Ketik identitas Anda dengan benar untuk menarik data tugas dari Cloud.</p>
+        <h2>🔒 Autentikasi Pegawai</h2>
+        <p style="color:#64748b; margin-bottom:25px; font-size:15px;">Ketik identitas Anda untuk menarik data tugas dari Brankas Cloud Admin.</p>
         <input type="text" id="myIdentity" placeholder="Contoh: Budi" onkeypress="handleEnter(event)" autocomplete="off">
-        <button class="btn btn-purple" style="width:100%; margin-top:15px; padding:15px; font-size:16px;" onclick="loginSistem()">Buka Brankas Tugas</button>
+        <button class="btn btn-purple" style="width:100%; margin-top:20px; padding:16px; font-size:16px;" onclick="loginSistem()">Buka Workspace</button>
     </div>
 
     <div id="mainWorkspace" style="display:none;">
         <div class="toolbar">
-            <button class="btn btn-orange" onclick="salinAntreanSelanjutnya()">📋 Salin Antrean Aktif (Tugas Saya)</button>
+            <button class="btn btn-orange" onclick="salinAntreanSelanjutnya()">📋 Salin Antrean (Tugas Saya)</button>
             <button class="btn btn-cyan" onclick="document.getElementById('inputDarurat').style.display='block'">➕ Sisipkan Data Manual</button>
-            <button class="btn" style="background:#475569; margin-left:auto;" onclick="logoutSistem()">Keluar Akun</button>
+            <button class="btn" style="background:#64748b; margin-left:auto;" onclick="logoutSistem()">Keluar Akun</button>
         </div>
-        <div id="inputDarurat" style="display:none; margin-bottom: 20px;">
-            <textarea id="inputData" style="width:100%; height:100px; padding:10px; border-radius:8px; border:2px solid #0284c7;" placeholder="Paste data yang belum ada di sini... (Otomatis masuk ke tugas Anda)"></textarea>
-            <button class="btn btn-cyan" style="margin-top:10px;" onclick="tambahKeAntrean()">Kirim Data Tambahan ke Cloud</button>
+        <div id="inputDarurat" style="display:none; margin-bottom: 25px;">
+            <textarea id="inputData" style="width:100%; height:120px; padding:15px; border-radius:12px; border:2px solid #0ea5e9; font-family:monospace; background:#f0f9ff;" placeholder="Paste data yang kelupaan disalin oleh Admin... (Otomatis ditugaskan ke Anda)"></textarea>
+            <button class="btn btn-cyan" style="margin-top:10px;" onclick="tambahKeAntrean()">Kirim Data Tambahan</button>
         </div>
         <div class="search-area">
             <div class="filter-row">
-                <div class="filter-col"><label>🔍 Pencarian Cepat:</label><input type="text" id="searchFilter" class="search-input" placeholder="Cari nama atau NIK di tugas Anda..." oninput="saringKartuLaporan()"></div>
+                <div class="filter-col"><label>🔍 Cari di Tugas Saya:</label><input type="text" id="searchFilter" class="search-input" placeholder="Cari nama atau NIK..." oninput="saringKartuLaporan()"></div>
             </div>
         </div>
         <div id="tabContainer" class="tab-container">
@@ -123,49 +140,69 @@
     firebase.initializeApp(firebaseConfig); const database = firebase.database(); const dbRef = database.ref('data_laporan_tim'); const teamRef = database.ref('team_members'); const chatRef = database.ref('chat_messages');
     let globalDataArray = []; let teamMembers = []; let tabSaatIni = 'aktif'; let typingTimeout; let namaSaya = localStorage.getItem('loginNamaSaya') || ""; 
     
+    let historiPerKartu = {};
+    function initHistori(uid, teks) { if(!historiPerKartu[uid]) historiPerKartu[uid] = { masaLalu: [], sekarang: teks, masaDepan: [] }; }
+    function undoTeks(btn) { let bx = btn.closest('.data-column').querySelector('.output-box'); let u = bx.getAttribute('data-uid'); let hs = historiPerKartu[u]; if(hs && hs.masaLalu.length > 0) { hs.masaDepan.push(hs.sekarang); let mundur = hs.masaLalu.pop(); hs.sekarang = mundur; bx.value = mundur; let ix = globalDataArray.findIndex(d => d.uid === u); if(ix !== -1) { globalDataArray[ix].text = mundur; simpanKeCloud(); } } else { tampilkanToast("Mentok Undo.", "#f59e0b"); } }
+    function redoTeks(btn) { let bx = btn.closest('.data-column').querySelector('.output-box'); let u = bx.getAttribute('data-uid'); let hs = historiPerKartu[u]; if(hs && hs.masaDepan.length > 0) { hs.masaLalu.push(hs.sekarang); let maju = hs.masaDepan.pop(); hs.sekarang = maju; bx.value = maju; let ix = globalDataArray.findIndex(d => d.uid === u); if(ix !== -1) { globalDataArray[ix].text = maju; simpanKeCloud(); } } else { tampilkanToast("Mentok Redo.", "#f59e0b"); } }
+
+    const dbNIK={"3171":"KOTA JAKARTA SELATAN","3172":"KOTA JAKARTA TIMUR","3201":"KABUPATEN BOGOR","3204":"KABUPATEN BANDUNG","3273":"KOTA BANDUNG"};
+    const petaProvinsi={"JAWA BARAT":["BANDUNG","BOGOR","BEKASI"],"DKI JAKARTA":["JAKARTA"]};
+
     let isChatOpen = false; let lastMsgCount = 0;
-    function toggleChat() { isChatOpen = !isChatOpen; document.getElementById('chatBox').style.display = isChatOpen ? 'flex' : 'none'; let btn = document.getElementById('chatToggleBtn'); btn.innerText = '💬 Lapor ke Admin'; btn.style.background = 'var(--purple)'; if(isChatOpen) { let cm = document.getElementById('chatMessages'); cm.scrollTop = cm.scrollHeight; } }
+    function toggleChat() { isChatOpen = !isChatOpen; document.getElementById('chatBox').style.display = isChatOpen ? 'flex' : 'none'; let btn = document.getElementById('chatToggleBtn'); btn.innerText = '💬 Lapor ke Admin'; if(isChatOpen) { let cm = document.getElementById('chatMessages'); cm.scrollTop = cm.scrollHeight; } }
     function kirimPesan() { let txt = document.getElementById('chatInput').value.trim(); if(!txt) return; chatRef.push({ sender: namaSaya, text: txt, time: new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'}) }); document.getElementById('chatInput').value = ''; }
-    
-    chatRef.on('value', snap => {
-        let cm = document.getElementById('chatMessages'); cm.innerHTML = ''; let data = snap.val();
-        if(data && namaSaya) { let msgs = Object.values(data); msgs.forEach(msg => { let isMine = (msg.sender === namaSaya); let msgClass = isMine ? 'msg-mine' : (msg.sender === "Admin 👑" ? 'msg-admin' : 'msg-other'); let div = document.createElement('div'); div.className = `msg-item ${msgClass}`; div.innerHTML = `<div class="msg-sender">${msg.sender} • ${msg.time}</div><div>${msg.text}</div>`; cm.appendChild(div); }); cm.scrollTop = cm.scrollHeight; if(msgs.length > lastMsgCount && !isChatOpen && lastMsgCount !== 0) { let btn = document.getElementById('chatToggleBtn'); btn.innerText = '💬 Pesan Baru!'; btn.style.background = '#dc2626'; } lastMsgCount = msgs.length; } else { lastMsgCount = 0; }
-    });
+    chatRef.on('value', snap => { let cm = document.getElementById('chatMessages'); cm.innerHTML = ''; let data = snap.val(); if(data && namaSaya) { let msgs = Object.values(data); msgs.forEach(msg => { let isMine = (msg.sender === namaSaya); let msgClass = isMine ? 'msg-mine' : (msg.sender === "Admin 👑" ? 'msg-admin' : 'msg-other'); let div = document.createElement('div'); div.className = `msg-item ${msgClass}`; div.innerHTML = `<div class="msg-sender">${msg.sender} • ${msg.time}</div><div>${msg.text}</div>`; cm.appendChild(div); }); cm.scrollTop = cm.scrollHeight; if(msgs.length > lastMsgCount && !isChatOpen && lastMsgCount !== 0) { let btn = document.getElementById('chatToggleBtn'); btn.innerText = '💬 Pesan Baru!'; } lastMsgCount = msgs.length; } else { lastMsgCount = 0; } });
 
-    // ===== FIX SMART RENDER: MENCEGAH LAG SAAT TIM MENGETIK =====
-    dbRef.on('value', snap => { 
-        document.getElementById('cloudStatus').innerText="🟢 Terhubung"; 
-        document.getElementById('cloudStatus').classList.add('online'); 
-        let dataBaru = snap.val() || [];
-        
-        let el = document.activeElement; 
-        let lagiNgetik = el && el.classList.contains('output-box');
-        
-        if (lagiNgetik) {
-            let uidEdit = el.getAttribute('data-uid');
-            globalDataArray = dataBaru.map(item => {
-                if(item.uid === uidEdit) item.text = el.value; // Pertahankan teks ketikan Tim
-                return item;
-            });
-        } else {
-            globalDataArray = dataBaru;
-            eksekusiPengurutanLaluRender(); 
-        }
-    });
-
+    dbRef.on('value', snap => { document.getElementById('cloudStatus').innerText="🟢 Sinkronisasi Aktif"; document.getElementById('cloudStatus').classList.add('online'); let dataBaru = snap.val() || []; let el = document.activeElement; let lagiNgetik = el && el.classList.contains('output-box'); if (lagiNgetik) { let uidEdit = el.getAttribute('data-uid'); globalDataArray = dataBaru.map(item => { if(item.uid === uidEdit) item.text = el.value; return item; }); } else { globalDataArray = dataBaru; eksekusiPengurutanLaluRender(); } });
     teamRef.on('value', snap => { teamMembers=snap.val()||[]; if(namaSaya && teamMembers.includes(namaSaya)) { document.getElementById('myIdentity').value = namaSaya; loginSistem(true); } });
 
     function simpanKeCloud() { dbRef.set(globalDataArray); }
     function generateUID() { return Date.now().toString(36)+Math.random().toString(36).substr(2); }
 
     function handleEnter(e) { if(e.key === 'Enter') loginSistem(); }
-    function loginSistem(isAuto = false) { let inputNama = document.getElementById('myIdentity').value.trim(); if(!inputNama) return; let namaValid = teamMembers.find(m => m.toLowerCase() === inputNama.toLowerCase()); if(namaValid) { namaSaya = namaValid; localStorage.setItem('loginNamaSaya', namaSaya); document.getElementById('loginGate').style.display = 'none'; document.getElementById('mainWorkspace').style.display = 'block'; document.getElementById('userGreeting').innerHTML = `👨‍💻 Selamat Bekerja, <span style="color:#2563eb;">${namaSaya}</span>!`; eksekusiPengurutanLaluRender(); document.getElementById('chatToggleBtn').style.display = 'block'; if(!isAuto) tampilkanToast(`Berhasil Masuk sebagai ${namaSaya}`, "#7c3aed"); } else { if(!isAuto) { alert(`⚠️ AKSES DITOLAK!\n\nNama "${inputNama}" tidak ditemukan.`); document.getElementById('myIdentity').value = ''; document.getElementById('myIdentity').focus(); } } }
-    function logoutSistem() { namaSaya = ""; localStorage.removeItem('loginNamaSaya'); document.getElementById('loginGate').style.display = 'block'; document.getElementById('mainWorkspace').style.display = 'none'; document.getElementById('myIdentity').value = ""; document.getElementById('userGreeting').innerText = "Aplikasi Pengelola Data Harian"; document.getElementById('chatToggleBtn').style.display = 'none'; document.getElementById('chatBox').style.display = 'none'; }
+    function loginSistem(isAuto = false) { let inputNama = document.getElementById('myIdentity').value.trim(); if(!inputNama) return; let namaValid = teamMembers.find(m => m.toLowerCase() === inputNama.toLowerCase()); if(namaValid) { namaSaya = namaValid; localStorage.setItem('loginNamaSaya', namaSaya); document.getElementById('loginGate').style.display = 'none'; document.getElementById('mainWorkspace').style.display = 'block'; document.getElementById('userGreeting').innerHTML = `Selamat Bekerja, <b>${namaSaya}</b>!`; eksekusiPengurutanLaluRender(); document.getElementById('chatToggleBtn').style.display = 'block'; if(!isAuto) tampilkanToast(`Berhasil Masuk: ${namaSaya}`, "#4f46e5"); } else { if(!isAuto) { alert(`⚠️ DITOLAK!\nNama "${inputNama}" tidak terdaftar.`); document.getElementById('myIdentity').value = ''; document.getElementById('myIdentity').focus(); } } }
+    function logoutSistem() { namaSaya = ""; localStorage.removeItem('loginNamaSaya'); document.getElementById('loginGate').style.display = 'block'; document.getElementById('mainWorkspace').style.display = 'none'; document.getElementById('myIdentity').value = ""; document.getElementById('userGreeting').innerText = "Workspace Premium Harian"; document.getElementById('chatToggleBtn').style.display = 'none'; document.getElementById('chatBox').style.display = 'none'; }
 
-    function tambahKeAntrean() { let inpt=document.getElementById('inputData').value; if(!inpt.trim())return alert("⚠️ Kotak kosong!"); let iT=-1; globalDataArray.forEach(i=>{if(i.index>iT)iT=i.index;}); let aT=prosesTextMentah(inpt,iT+1); if(aT.length===0)return alert("Gagal diproses!"); aT.forEach(d => d.assignedTo = namaSaya); globalDataArray=globalDataArray.concat(aT); simpanKeCloud(); document.getElementById('inputData').value=''; document.getElementById('inputDarurat').style.display='none'; gantiTab('aktif'); tampilkanToast(`✔️ Data berhasil diamankan.`, "#0284c7"); }
+    function tebakProvinsi(kab) { kab=kab.toUpperCase().trim(); for(let p in petaProvinsi){ if(petaProvinsi[p].some(k=>kab.includes(k))) return p; } return kab; }
     function kurangiSatuBulan(dt) { if(!dt) return""; let p=dt.split('-'); if(p.length!==3) return dt; let d=p[0], m=parseInt(p[1],10), y=parseInt(p[2],10); m-=1; if(m===0){m=12;y-=1;} return `${d}-${m<10?'0'+m:m}-${y}`; }
     function bentukTeksAkhir(dt, cIdx) { let sc=parseInt(dt.status,10); let hd=(sc>=2&&sc<=20)?`SENSOR JMO OK\nGLOBAL ${dt.amount}`:(sc===1?`TUNGGAL\n${dt.amount}`:`STATUS_${dt.status}\n${dt.amount}`); let em=dt.email?`${dt.email}\n`:''; return {uid:generateUID(), index:cIdx, status:dt.status, nama:dt.nama, nik:dt.nik, provinsi:dt.provinsi, company:dt.company.toUpperCase().trim(), amount:dt.amount, done:false, deleted:false, selected:true, assignedTo:"", text:`${dt.wilayah}\n\n${dt.nik}\n${dt.gender}\n${dt.tglLahir}\n\n${hd}\n${dt.company}\nN/A ${dt.endDate}\n\n${em}Qwer123@\n${dt.id1}\n${dt.nama}`}; }
-    function prosesTextMentah(inputStr, idx) { let ra=[]; let pTxt=inputStr; const rgx=/(\d{16})\s*\n(.+?)\s*\n(.*?)\s*\|\s*(\d{2}-\d{2}-\d{4})\s*\n(?:JUMLAH KPJ:\s*)?(\d+)\s*\n(\d+)\s*\n(.+?)\s*\n(\d{2}-\d{2}-\d{4})\s*\nTOTAL SALDO\s*:\s*(?:Rp)?\s*([\d\.]+)(?:\s*\nJMO)?/gi; let m; let lI=0; while((m=rgx.exec(inputStr))!==null){ let txtS=inputStr.substring(lI,m.index).replace(/\[.*?\]\s*.*?:\s*/g,''); let barS=txtS.split('\n').map(b=>b.trim()).filter(b=>b.length>0); let kA=barS.slice(-4); let aG=kA.join(', '); let wF=kA.length>0?`*${kA.join(', ')}*`:`*Alamat Kosong*`; ra.push(bentukTeksAkhir({wilayah:wF, provinsi:"", nik:m[1].trim(), nama:m[2].trim(), gender:(m[3].toUpperCase().includes('L')||m[3].toUpperCase().includes('PRIA'))?'PRIA':'WANITA', tglLahir:m[4].trim(), status:m[5].trim(), id1:m[6].trim(), company:m[7].trim(), endDate:kurangiSatuBulan(m[8].trim()), amount:parseInt(m[9].trim().replace(/\./g,'')||"0",10).toLocaleString('id-ID'), email:""}, idx++)); lI=rgx.lastIndex; pTxt=pTxt.replace(m[0],' '.repeat(m[0].length)); } return ra; }
+    
+    function prosesTextMentah(inputStr, idx) { 
+        let ra=[]; let pTxt=inputStr; const rgx=/(\d{16})\s*\n(.+?)\s*\n(.*?)\s*\|\s*(\d{2}-\d{2}-\d{4})\s*\n(?:JUMLAH KPJ:\s*)?(\d+)\s*\n(\d+)\s*\n(.+?)\s*\n(\d{2}-\d{2}-\d{4})\s*\nTOTAL SALDO\s*:\s*(?:Rp)?\s*([\d\.]+)(?:\s*\nJMO)?/gi; let m; let lI=0; 
+        while((m=rgx.exec(inputStr))!==null){ 
+            let txtS=inputStr.substring(lI,m.index).replace(/\[.*?\]\s*.*?:\s*/g,''); let barS=txtS.split('\n').map(b=>b.trim()).filter(b=>b.length>0); let kA=barS.slice(-4); let aG=kA.join(', '); let wF=kA.length>0?`*${kA.join(', ')}*`:`*Alamat Kosong*`; ra.push(bentukTeksAkhir({wilayah:wF, provinsi:"", nik:m[1].trim(), nama:m[2].trim(), gender:(m[3].toUpperCase().includes('L')||m[3].toUpperCase().includes('PRIA'))?'PRIA':'WANITA', tglLahir:m[4].trim(), status:m[5].trim(), id1:m[6].trim(), company:m[7].trim(), endDate:kurangiSatuBulan(m[8].trim()), amount:parseInt(m[9].trim().replace(/\./g,'')||"0",10).toLocaleString('id-ID'), email:""}, idx++)); lI=rgx.lastIndex; pTxt=pTxt.replace(m[0],' '.repeat(m[0].length)); 
+        } 
+        let lns=pTxt.split('\n'); 
+        for(let i=0;i<lns.length;i++){ 
+            let cL=lns[i].replace(/^\[.*?\] .*?:\s*/,'').trim(); if(!cL)continue; 
+            let c=cL.split('\t').map(x=>x.trim()).filter(x=>x!==''); 
+            
+            if(c.length>=12 && /^\d{2}-\d{2}-\d{4}$/.test(c[4]) && (c[5].toUpperCase()==='L' || c[5].toUpperCase()==='P' || c[5].toUpperCase()==='PRIA' || c[5].toUpperCase()==='WANITA')){ 
+                ra.push(bentukTeksAkhir({id1:c[1], nik:c[2], nama:c[3], tglLahir:c[4], gender:(c[5]?.toUpperCase()==='L' || c[5]?.toUpperCase()==='PRIA')?'PRIA':'WANITA', status:c[6], amount:parseInt(c[7]||"0",10).toLocaleString('id-ID'), company:c[8], endDate:kurangiSatuBulan(c[10]), wilayah:`*${c[11]}, ${c[12]}, ${c[13]}*`, provinsi:tebakProvinsi(c[11]), email:""}, idx++)); 
+            } 
+            else if (c.length >= 7 && c[2] && c[2].length === 16) {
+                let id1 = c[0]; let nama = c[1]; let nik = c[2]; let tglLahir = c[3]; let alamatRaw = c[4];
+                let company = "N/A"; let endDate = ""; let amount = "0"; let status = "0";
+                if (/^\d{2}-\d{2}-\d{4}$/.test(c[5])) { endDate = c[5]; amount = c[6]; status = c[7]; } 
+                else if (/^\d{2}-\d{2}-\d{4}$/.test(c[6])) { company = c[5]; endDate = c[6]; amount = c[7]; status = c[8]; }
+                let gen = "PRIA"; if (parseInt(nik.substring(6,8), 10) > 40) gen = "WANITA";
+                let amtStr = (amount || "0").replace(/Rp\s*/i,'').replace(/\./g,'').trim();
+                let amt = parseInt(amtStr||"0", 10).toLocaleString('id-ID');
+                let nmK = dbNIK[nik.substring(0,4)] || "Kab. Tidak Ditemukan";
+                let aB = alamatRaw.replace(/\b(Kabupaten|Kota|Kecamatan|Kelurahan|Desa)\b\s*[:\-]?\s*|\b(Kab|Kec|Kel)\b\.?\s*[:\-]?\s*/gi,'').replace(/,\s*,/g,',').replace(/^,\s*/,'').trim();
+                let wF = /\b(kabupaten|kota|kab)\b/i.test(alamatRaw) ? `*${aB}*` : `*${nmK}, ${aB}*`;
+                let pF = tebakProvinsi(wF.split(',')[0]);
+                ra.push(bentukTeksAkhir({ id1: id1, nik: nik, nama: nama, tglLahir: tglLahir, gender: gen, status: status, amount: amt, company: company, endDate: kurangiSatuBulan(endDate), wilayah: wF, provinsi: pF, email: "" }, idx++));
+            }
+            else { 
+                let mt=cL.match(/^(\d+)\s+(\d+)\s+(\d+)\s+(.*?)\s+(\d{2}-\d{2}-\d{4})\s*(L|P|l|p)\s*(\d+)\s+(\d+)\s+(.*?)\s+(\d{2}-\d{2}-\d{4})\s+(\d{2}-\d{2}-\d{4})\s+(.*?)(?:\s+success)?$/i); 
+                if(mt){ let wR=mt[12]; ra.push(bentukTeksAkhir({id1:mt[2], nik:mt[3], nama:mt[4], tglLahir:mt[5], gender:mt[6].toUpperCase()==='L'?'PRIA':'WANITA', status:mt[7], amount:parseInt(mt[8]||"0",10).toLocaleString('id-ID'), company:mt[9], endDate:kurangiSatuBulan(mt[11]), wilayah:wR.includes('  ')?`*${wR.replace(/\s{2,}/g,', ')}*`:`*${wR}*`, provinsi:tebakProvinsi(wR.split(/[, ]+/)[0]), email:""}, idx++)); } 
+            } 
+        } 
+        return ra; 
+    }
+
+    function tambahKeAntrean() { let inpt=document.getElementById('inputData').value; if(!inpt.trim())return alert("Kosong!"); let iT=-1; globalDataArray.forEach(i=>{if(i.index>iT)iT=i.index;}); let aT=prosesTextMentah(inpt,iT+1); if(aT.length===0)return alert("Gagal!"); aT.forEach(d => d.assignedTo = namaSaya); globalDataArray=globalDataArray.concat(aT); simpanKeCloud(); document.getElementById('inputData').value=''; document.getElementById('inputDarurat').style.display='none'; gantiTab('aktif'); tampilkanToast(`✔️ Data disisipkan.`, "#10b981"); }
     function eksekusiPengurutanLaluRender() { let arr=[...globalDataArray]; arr.sort((a,b)=>a.index-b.index); buatElemenKolom(arr); saringKartuLaporan(); }
     
     function buatElemenKolom(arr) { 
@@ -173,23 +210,20 @@
         const wA=document.getElementById('wrapperAktif'); const wS=document.getElementById('wrapperSelesai'); const wD=document.getElementById('wrapperSampah'); wA.innerHTML=''; wS.innerHTML=''; wD.innerHTML=''; let hN={}; arr.forEach(i=>{ if(i.nik&&!i.deleted)hN[i.nik]=(hN[i.nik]||0)+1; }); let jA=0, jS=0, jD=0; 
         arr.forEach(i=>{ 
             if(i.assignedTo !== namaSaya) return; 
+            initHistori(i.uid, i.text);
             const dv=document.createElement('div'); let isD=(!i.deleted&&i.nik&&hN[i.nik]>1); dv.className=i.deleted?'data-column is-deleted':(i.done?'data-column is-done':(isD?'data-column is-duplicate':'data-column')); let tc=(parseInt(i.status,10)>=2&&parseInt(i.status,10)<=20)?'title-global':'title-tunggal';
-            let ah=``; if(!i.deleted){ah=`<div class="assign-box">✔️ Ini Tugas Anda</div>`;}
-            let ac=i.deleted?`<div class="card-actions"><button class="btn btn-blue" onclick="rubahStatusSampah(this,'kembalikan')">↩ Restore (Batal Buang)</button></div>`:`${isD?`<div class="duplicate-msg">⚠️ NIK INI GANDA</div>`:''}<div class="mass-check-row"><input type="checkbox" class="send-queue-check" ${i.selected?'checked':''} onchange="perbaruiCheckbox(this)"> 📌 Antrean</div><div class="card-actions"><button class="btn btn-green" onclick="salinSatuKolom(this)">📋 Salin</button><button class="btn ${i.done?'btn-status-undone':'btn-status-done'}" onclick="toggleTandaiSelesai(this)">${i.done?'↩ Batal':'✔️ Selesai'}</button><button class="btn btn-red" style="flex:0.3" onclick="rubahStatusSampah(this,'buang')" title="Laporkan/Buang ke Sampah">🗑️</button></div>`;
-            dv.innerHTML=`<div class="col-title ${tc}">KOLOM ${i.index+1}</div>${ah}${ac}<textarea class="output-box" placeholder="Ketik di sini untuk mengoreksi..." data-uid="${i.uid}">${i.text}</textarea>`;
+            let ah=``; if(!i.deleted){ah=`<div class="assign-box">✔️ Milik Anda</div>`;}
+            let ac=i.deleted?`<div class="card-actions"><button class="btn btn-blue" onclick="rubahStatusSampah(this,'kembalikan')">↩ Restore</button></div>`:`${isD?`<div class="duplicate-msg">⚠️ PERINGATAN NIK GANDA</div>`:''}<div class="mass-check-row"><input type="checkbox" class="send-queue-check" ${i.selected?'checked':''} onchange="perbaruiCheckbox(this)"> 📌 Tandai Antrean</div><div class="card-actions"><button class="btn btn-green" onclick="salinSatuKolom(this)">📋 Salin</button><button class="btn ${i.done?'btn-status-undone':'btn-status-done'}" onclick="toggleTandaiSelesai(this)">${i.done?'↩ Batal':'✔️ Selesai'}</button><button class="btn btn-red" style="flex:0.3" onclick="rubahStatusSampah(this,'buang')" title="Laporkan/Buang ke Sampah">🗑️</button></div>`;
+            dv.innerHTML=`<div class="col-title ${tc}">DATA KOLOM ${i.index+1}</div>${ah}${ac}<textarea class="output-box" placeholder="Ketik di sini untuk mengoreksi..." data-uid="${i.uid}">${i.text}</textarea><div class="edit-toolbar"><button onclick="undoTeks(this)">↺ Undo</button><button onclick="redoTeks(this)">↻ Redo</button></div>`;
             if(i.deleted){wD.appendChild(dv);jD++;}else if(i.done){wS.appendChild(dv);jS++;}else{wA.appendChild(dv);jA++;}
         }); document.getElementById('hitungAktif').innerText=jA; document.getElementById('hitungSelesai').innerText=jS; document.getElementById('hitungSampah').innerText=jD;
         
-        // ===== FIX SMART RENDER (EVENT LISTENER BLUR) =====
         document.querySelectorAll('.output-box').forEach(bx=>{ 
             bx.addEventListener('input', function(){ 
-                let u=this.getAttribute('data-uid'); let v=this.value; 
-                let ix=globalDataArray.findIndex(d=>d.uid===u); 
-                if(ix!==-1)globalDataArray[ix].text=v; 
-                clearTimeout(typingTimeout); 
-                typingTimeout=setTimeout(()=>{simpanKeCloud();},1000); 
+                let u=this.getAttribute('data-uid'); let v=this.value; let ix=globalDataArray.findIndex(d=>d.uid===u); if(ix!==-1)globalDataArray[ix].text=v; 
+                let hs = historiPerKartu[u]; if(hs && hs.sekarang !== v) { hs.masaLalu.push(hs.sekarang); if(hs.masaLalu.length > 40) hs.masaLalu.shift(); hs.sekarang = v; hs.masaDepan = []; }
+                clearTimeout(typingTimeout); typingTimeout=setTimeout(()=>{simpanKeCloud();},1000); 
             }); 
-            // Refresh layar HANYA jika kursor sudah keluar dari kotak (selesai ngetik)
             bx.addEventListener('blur', function() { eksekusiPengurutanLaluRender(); });
         });
     }
@@ -199,9 +233,9 @@
     function toggleTandaiSelesai(b) { let u=b.closest('.data-column').querySelector('.output-box').getAttribute('data-uid'); let i=globalDataArray.findIndex(d=>d.uid===u); if(i!==-1){globalDataArray[i].done=!globalDataArray[i].done;simpanKeCloud();} }
     function rubahStatusSampah(b,p) { let u=b.closest('.data-column').querySelector('.output-box').getAttribute('data-uid'); let i=globalDataArray.findIndex(d=>d.uid===u); if(i!==-1){ if(p==='buang'){globalDataArray[i].deleted=true;globalDataArray[i].done=false;globalDataArray[i].selected=false;} else if(p==='kembalikan'){globalDataArray[i].deleted=false;} simpanKeCloud(); } }
     function perbaruiCheckbox(c) { let u=c.closest('.data-column').querySelector('.output-box').getAttribute('data-uid'); let i=globalDataArray.findIndex(d=>d.uid===u); if(i!==-1){globalDataArray[i].selected=c.checked;simpanKeCloud();} }
-    function tampilkanToast(m,c) { let t=document.getElementById('toastNotif'); t.innerText=m; t.style.borderColor=c; t.style.display='block'; setTimeout(()=>t.style.display='none',3500); }
+    function tampilkanToast(m,c) { let t=document.getElementById('toastNotif'); t.innerText=m; t.style.background=c; t.style.display='block'; setTimeout(()=>t.style.display='none',3500); }
     function salinTeksAman(txt,s) { let dm=document.createElement('textarea'); dm.value=txt; dm.style.position='absolute'; dm.style.left='-9999px'; document.body.appendChild(dm); dm.select(); document.execCommand('copy'); document.body.removeChild(dm); if(s)s(); }
-    function salinAntreanSelanjutnya() { let an=document.querySelectorAll('.tab-content.active .send-queue-check:checked'); if(an.length===0)return tampilkanToast("⚠️ Antrean habis!", "#dc2626"); let c=an[0].closest('.data-column'); let t=c.querySelector('.output-box'); if(!t.value)return; salinTeksAman(t.value,()=>{ tampilkanToast(`✔️ Tersalin!`, "#16a34a"); let i=globalDataArray.findIndex(d=>d.uid===t.getAttribute('data-uid')); if(i!==-1){globalDataArray[i].selected=false;globalDataArray[i].done=true;simpanKeCloud();} }); }
+    function salinAntreanSelanjutnya() { let an=document.querySelectorAll('.tab-content.active .send-queue-check:checked'); if(an.length===0)return tampilkanToast("⚠️ Antrean habis!", "#ef4444"); let c=an[0].closest('.data-column'); let t=c.querySelector('.output-box'); if(!t.value)return; salinTeksAman(t.value,()=>{ tampilkanToast(`✔️ Tersalin!`, "#10b981"); let i=globalDataArray.findIndex(d=>d.uid===t.getAttribute('data-uid')); if(i!==-1){globalDataArray[i].selected=false;globalDataArray[i].done=true;simpanKeCloud();} }); }
     function salinSatuKolom(b) { let t=b.closest('.data-column').querySelector('.output-box'); if(!t.value)return; salinTeksAman(t.value,()=>{ let l=b.innerText; b.innerText='✔️'; setTimeout(()=>b.innerText=l,1500); }); }
 </script>
 </body>
