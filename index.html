@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👨‍💻 ByDataKu V30.1 - PORTAL TIM PREMIUM</title>
+    <title>👨‍💻 ByDataKu V30.3 - PORTAL TIM PREMIUM</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <style>
@@ -167,10 +167,13 @@
     function kurangiSatuBulan(dt) { if(!dt) return""; let p=dt.split('-'); if(p.length!==3) return dt; let d=p[0], m=parseInt(p[1],10), y=parseInt(p[2],10); m-=1; if(m===0){m=12;y-=1;} return `${d}-${m<10?'0'+m:m}-${y}`; }
     function bentukTeksAkhir(dt, cIdx) { let sc=parseInt(dt.status,10); let hd=(sc>=2&&sc<=20)?`SENSOR JMO OK\nGLOBAL ${dt.amount}`:(sc===1?`TUNGGAL\n${dt.amount}`:`STATUS_${dt.status}\n${dt.amount}`); let em=dt.email?`${dt.email}\n`:''; return {uid:generateUID(), index:cIdx, status:dt.status, nama:dt.nama, nik:dt.nik, provinsi:dt.provinsi, company:dt.company.toUpperCase().trim(), amount:dt.amount, done:false, deleted:false, selected:true, assignedTo:"", text:`${dt.wilayah}\n\n${dt.nik}\n${dt.gender}\n${dt.tglLahir}\n\n${hd}\n${dt.company}\nN/A ${dt.endDate}\n\n${em}Qwer123@\n${dt.id1}\n${dt.nama}`}; }
     
+    // RUMUS SAKTI UNIVERSAL V30.3
     function prosesTextMentah(inputStr, idx) { 
         let ra=[]; let pTxt=inputStr; const rgx=/(\d{16})\s*\n(.+?)\s*\n(.*?)\s*\|\s*(\d{2}-\d{2}-\d{4})\s*\n(?:JUMLAH KPJ:\s*)?(\d+)\s*\n(\d+)\s*\n(.+?)\s*\n(\d{2}-\d{2}-\d{4})\s*\nTOTAL SALDO\s*:\s*(?:Rp)?\s*([\d\.]+)(?:\s*\nJMO)?/gi; let m; let lI=0; 
         while((m=rgx.exec(inputStr))!==null){ 
-            let txtS=inputStr.substring(lI,m.index).replace(/\[.*?\]\s*.*?:\s*/g,''); let barS=txtS.split('\n').map(b=>b.trim()).filter(b=>b.length>0); let kA=barS.slice(-4); let aG=kA.join(', '); let wF=kA.length>0?`*${kA.join(', ')}*`:`*Alamat Kosong*`; ra.push(bentukTeksAkhir({wilayah:wF, provinsi:"", nik:m[1].trim(), nama:m[2].trim(), gender:(m[3].toUpperCase().includes('L')||m[3].toUpperCase().includes('PRIA'))?'PRIA':'WANITA', tglLahir:m[4].trim(), status:m[5].trim(), id1:m[6].trim(), company:m[7].trim(), endDate:kurangiSatuBulan(m[8].trim()), amount:parseInt(m[9].trim().replace(/\./g,'')||"0",10).toLocaleString('id-ID'), email:""}, idx++)); lI=rgx.lastIndex; pTxt=pTxt.replace(m[0],' '.repeat(m[0].length)); 
+            let txtS=inputStr.substring(lI,m.index).replace(/\[.*?\]\s*.*?:\s*/g,''); let barS=txtS.split('\n').map(b=>b.trim()).filter(b=>b.length>0); let kA=barS.slice(-4); let aG=kA.join(', '); let wF=""; let pF=""; let nk=m[1].trim(); let kK=nk.substring(0,4); let nmK=dbNIK[kK]||"Kab. Tidak Ditemukan";
+            if(aG && /\b(kabupaten|kota|kab|kecamatan|kec|desa|kelurahan|kel)\b/i.test(aG)){ let aB=aG.replace(/\b(Kabupaten|Kota|Kecamatan|Kelurahan|Desa)\b\s*[:\-]?\s*|\b(Kab|Kec|Kel)\b\.?\s*[:\-]?\s*/gi,'').replace(/,\s*,/g,',').replace(/^,\s*/,'').trim(); wF=/\b(kabupaten|kota|kab)\b/i.test(aG)?`*${aB}*`:`*${nmK}, ${aB}*`; pF=tebakProvinsi(wF.split(',')[0]); } else { wF=(kA.length>0 && kA.join(', ').length<100)?`*${nmK}, ${kA.join(', ')}*`:`*${nmK}*`; pF=tebakProvinsi(nmK); }
+            ra.push(bentukTeksAkhir({wilayah:wF, provinsi:pF, nik:nk, nama:m[2].trim(), gender:(m[3].toUpperCase().includes('L')||m[3].toUpperCase().includes('PRIA'))?'PRIA':'WANITA', tglLahir:m[4].trim(), status:m[5].trim(), id1:m[6].trim(), company:m[7].trim(), endDate:kurangiSatuBulan(m[8].trim()), amount:parseInt(m[9].trim().replace(/\./g,'')||"0",10).toLocaleString('id-ID'), email:""}, idx++)); lI=rgx.lastIndex; pTxt=pTxt.replace(m[0],' '.repeat(m[0].length)); 
         } 
         let lns=pTxt.split('\n'); 
         for(let i=0;i<lns.length;i++){ 
@@ -180,6 +183,17 @@
             if(c.length>=12 && /^\d{2}-\d{2}-\d{4}$/.test(c[4]) && (c[5].toUpperCase()==='L' || c[5].toUpperCase()==='P' || c[5].toUpperCase()==='PRIA' || c[5].toUpperCase()==='WANITA')){ 
                 ra.push(bentukTeksAkhir({id1:c[1], nik:c[2], nama:c[3], tglLahir:c[4], gender:(c[5]?.toUpperCase()==='L' || c[5]?.toUpperCase()==='PRIA')?'PRIA':'WANITA', status:c[6], amount:parseInt(c[7]||"0",10).toLocaleString('id-ID'), company:c[8], endDate:kurangiSatuBulan(c[10]), wilayah:`*${c[11]}, ${c[12]}, ${c[13]}*`, provinsi:tebakProvinsi(c[11]), email:""}, idx++)); 
             } 
+            else if (c.length >= 13 && c[3] && c[3].length === 16 && /^\d{2}-\d{2}-\d{4}$/.test(c[5])) {
+                let id1 = c[1]; let nama = c[2]; let nik = c[3]; let tglLahir = c[5]; let alamatRaw = c[6];
+                let company = c[7]; let endDate = c[10]; let amtStr = (c[11] || "0").replace(/Rp\s*/i,'').replace(/\./g,'').trim();
+                let amt = parseInt(amtStr||"0", 10).toLocaleString('id-ID'); let status = c[12];
+                let gen = "PRIA"; if (parseInt(nik.substring(6,8), 10) > 40) gen = "WANITA";
+                let nmK = dbNIK[nik.substring(0,4)] || "Kab. Tidak Ditemukan";
+                let aB = alamatRaw.replace(/\b(Kabupaten|Kota|Kecamatan|Kelurahan|Desa)\b\s*[:\-]?\s*|\b(Kab|Kec|Kel)\b\.?\s*[:\-]?\s*/gi,'').replace(/,\s*,/g,',').replace(/^,\s*/,'').trim();
+                let wF = /\b(kabupaten|kota|kab)\b/i.test(alamatRaw) ? `*${aB}*` : `*${nmK}, ${aB}*`;
+                let pF = tebakProvinsi(wF.split(',')[0]);
+                ra.push(bentukTeksAkhir({ id1: id1, nik: nik, nama: nama, tglLahir: tglLahir, gender: gen, status: status, amount: amt, company: company, endDate: kurangiSatuBulan(endDate), wilayah: wF, provinsi: pF, email: "" }, idx++));
+            }
             else if (c.length >= 7 && c[2] && c[2].length === 16) {
                 let id1 = c[0]; let nama = c[1]; let nik = c[2]; let tglLahir = c[3]; let alamatRaw = c[4];
                 let company = "N/A"; let endDate = ""; let amount = "0"; let status = "0";
@@ -202,7 +216,7 @@
         return ra; 
     }
 
-    function tambahKeAntrean() { let inpt=document.getElementById('inputData').value; if(!inpt.trim())return alert("Kosong!"); let iT=-1; globalDataArray.forEach(i=>{if(i.index>iT)iT=i.index;}); let aT=prosesTextMentah(inpt,iT+1); if(aT.length===0)return alert("Gagal!"); aT.forEach(d => d.assignedTo = namaSaya); globalDataArray=globalDataArray.concat(aT); simpanKeCloud(); document.getElementById('inputData').value=''; document.getElementById('inputDarurat').style.display='none'; gantiTab('aktif'); tampilkanToast(`✔️ Data disisipkan.`, "#10b981"); }
+    function tambahKeAntrean() { let inpt=document.getElementById('inputData').value; if(!inpt.trim())return alert("Kosong!"); let iT=-1; globalDataArray.forEach(i=>{if(i.index>iT)iT=i.index;}); let aT=prosesTextMentah(inpt,iT+1); if(aT.length===0)return alert("Gagal!"); aT.forEach(d => d.assignedTo = namaSaya); globalDataArray=globalDataArray.concat(aT); simpanKeCloud(); document.getElementById('inputData').value=''; document.getElementById('inputDarurat').style.display='none'; gantiTab('aktif'); tampilkanToast(`✔️ Data disisipkan ke tugas Anda.`, "#10b981"); }
     function eksekusiPengurutanLaluRender() { let arr=[...globalDataArray]; arr.sort((a,b)=>a.index-b.index); buatElemenKolom(arr); saringKartuLaporan(); }
     
     function buatElemenKolom(arr) { 
@@ -213,7 +227,7 @@
             initHistori(i.uid, i.text);
             const dv=document.createElement('div'); let isD=(!i.deleted&&i.nik&&hN[i.nik]>1); dv.className=i.deleted?'data-column is-deleted':(i.done?'data-column is-done':(isD?'data-column is-duplicate':'data-column')); let tc=(parseInt(i.status,10)>=2&&parseInt(i.status,10)<=20)?'title-global':'title-tunggal';
             let ah=``; if(!i.deleted){ah=`<div class="assign-box">✔️ Milik Anda</div>`;}
-            let ac=i.deleted?`<div class="card-actions"><button class="btn btn-blue" onclick="rubahStatusSampah(this,'kembalikan')">↩ Restore</button></div>`:`${isD?`<div class="duplicate-msg">⚠️ PERINGATAN NIK GANDA</div>`:''}<div class="mass-check-row"><input type="checkbox" class="send-queue-check" ${i.selected?'checked':''} onchange="perbaruiCheckbox(this)"> 📌 Tandai Antrean</div><div class="card-actions"><button class="btn btn-green" onclick="salinSatuKolom(this)">📋 Salin</button><button class="btn ${i.done?'btn-status-undone':'btn-status-done'}" onclick="toggleTandaiSelesai(this)">${i.done?'↩ Batal':'✔️ Selesai'}</button><button class="btn btn-red" style="flex:0.3" onclick="rubahStatusSampah(this,'buang')" title="Laporkan/Buang ke Sampah">🗑️</button></div>`;
+            let ac=i.deleted?`<div class="card-actions"><button class="btn btn-blue" onclick="rubahStatusSampah(this,'kembalikan')">↩ Restore</button></div>`:`${isD?`<div class="duplicate-msg">⚠️ PERINGATAN NIK GANDA</div>`:''}<div class="mass-check-row"><input type="checkbox" class="send-queue-check" ${i.selected?'checked':''} onchange="perbaruiCheckbox(this)"> 📌 Tandai Antrean</div><div class="card-actions"><button class="btn btn-green" onclick="salinSatuKolom(this)">📋 Salin</button><button class="btn ${i.done?'btn-status-undone':'btn-status-done'}" onclick="toggleTandaiSelesai(this)">${i.done?'↩ Batal':'✔️ Selesai'}</button><button class="btn btn-red" style="flex:0.3" onclick="rubahStatusSampah(this,'buang')">🗑️</button></div>`;
             dv.innerHTML=`<div class="col-title ${tc}">DATA KOLOM ${i.index+1}</div>${ah}${ac}<textarea class="output-box" placeholder="Ketik di sini untuk mengoreksi..." data-uid="${i.uid}">${i.text}</textarea><div class="edit-toolbar"><button onclick="undoTeks(this)">↺ Undo</button><button onclick="redoTeks(this)">↻ Redo</button></div>`;
             if(i.deleted){wD.appendChild(dv);jD++;}else if(i.done){wS.appendChild(dv);jS++;}else{wA.appendChild(dv);jA++;}
         }); document.getElementById('hitungAktif').innerText=jA; document.getElementById('hitungSelesai').innerText=jS; document.getElementById('hitungSampah').innerText=jD;
@@ -235,7 +249,7 @@
     function perbaruiCheckbox(c) { let u=c.closest('.data-column').querySelector('.output-box').getAttribute('data-uid'); let i=globalDataArray.findIndex(d=>d.uid===u); if(i!==-1){globalDataArray[i].selected=c.checked;simpanKeCloud();} }
     function tampilkanToast(m,c) { let t=document.getElementById('toastNotif'); t.innerText=m; t.style.background=c; t.style.display='block'; setTimeout(()=>t.style.display='none',3500); }
     function salinTeksAman(txt,s) { let dm=document.createElement('textarea'); dm.value=txt; dm.style.position='absolute'; dm.style.left='-9999px'; document.body.appendChild(dm); dm.select(); document.execCommand('copy'); document.body.removeChild(dm); if(s)s(); }
-    function salinAntreanSelanjutnya() { let an=document.querySelectorAll('.tab-content.active .send-queue-check:checked'); if(an.length===0)return tampilkanToast("⚠️ Antrean habis!", "#ef4444"); let c=an[0].closest('.data-column'); let t=c.querySelector('.output-box'); if(!t.value)return; salinTeksAman(t.value,()=>{ tampilkanToast(`✔️ Tersalin!`, "#10b981"); let i=globalDataArray.findIndex(d=>d.uid===t.getAttribute('data-uid')); if(i!==-1){globalDataArray[i].selected=false;globalDataArray[i].done=true;simpanKeCloud();} }); }
+    function salinAntreanSelanjutnya() { let an=document.querySelectorAll('#zonaAktif .send-queue-check:checked'); if(an.length===0)return tampilkanToast("⚠️ Antrean habis!", "#ef4444"); let c=an[0].closest('.data-column'); let t=c.querySelector('.output-box'); if(!t.value)return; salinTeksAman(t.value,()=>{ tampilkanToast(`✔️ Tersalin!`, "#10b981"); let i=globalDataArray.findIndex(d=>d.uid===t.getAttribute('data-uid')); if(i!==-1){globalDataArray[i].selected=false;globalDataArray[i].done=true;simpanKeCloud();} }); }
     function salinSatuKolom(b) { let t=b.closest('.data-column').querySelector('.output-box'); if(!t.value)return; salinTeksAman(t.value,()=>{ let l=b.innerText; b.innerText='✔️'; setTimeout(()=>b.innerText=l,1500); }); }
 </script>
 </body>
